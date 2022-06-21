@@ -9,9 +9,9 @@ class RegistrationResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['response'] = response.toJson();
-    return _data;
+    final data = <String, dynamic>{};
+    data['response'] = response.toJson();
+    return data;
   }
 }
 
@@ -35,12 +35,12 @@ class Response {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['infoID'] = infoID;
-    _data['data'] = data.toJson();
-    _data['infoMsg'] = infoMsg;
-    _data['msgID'] = msgID;
-    return _data;
+    final datas = <String, dynamic>{};
+    datas['infoID'] = infoID;
+    datas['data'] = data.toJson();
+    datas['infoMsg'] = infoMsg;
+    datas['msgID'] = msgID;
+    return datas;
   }
 }
 
@@ -50,7 +50,7 @@ class Data {
   Data.fromJson(Map json);
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    return _data;
+    final data = <String, dynamic>{};
+    return data;
   }
 }

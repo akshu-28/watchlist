@@ -14,14 +14,22 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
   RegistrationBloc() : super(RegistrationInitial()) {
     on<RegistrationRequestEvent>((event, emit) async {
       emit(RegistrationLoad());
-      var response = await RegistrationRepository()
-          .registration(event.registrationRequest);
-      emit(RegistrationDone(response));
+      try {
+        var response = await RegistrationRepository()
+            .registration(event.registrationRequest);
+        emit(RegistrationDone(response));
+      } catch (e) {
+        emit(RegistrationError(e.toString()));
+      }
     });
     on<LoginRequestEvent>((event, emit) async {
       emit(RegistrationLoad());
-      var response = await LoginRepository().login(event.loginRequest);
-      emit(LoginDone(response));
+      try {
+        var response = await LoginRepository().login(event.loginRequest);
+        emit(LoginDone(response));
+      } catch (e) {
+        emit(RegistrationError(e.toString()));
+      }
     });
   }
 }

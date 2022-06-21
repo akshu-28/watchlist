@@ -3,8 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:sms_autofill/sms_autofill.dart';
-import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
+
 import 'package:watchlist/bloc/registration/registration_bloc.dart';
 import 'package:watchlist/model/registration_request.dart';
 import 'package:watchlist/ui/widgets/app_scaffold.dart';
@@ -23,7 +22,6 @@ class _RegistrationState extends State<Registration> {
   final intRegex = RegExp(r'\d+', multiLine: true);
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     registrationBloc = BlocProvider.of<RegistrationBloc>(context)
@@ -32,6 +30,11 @@ class _RegistrationState extends State<Registration> {
           log(state.response.response.infoMsg);
           Navigator.pop(context);
           Navigator.pushNamed(context, "/loginpage");
+        }
+        if (state is RegistrationError) {
+          log(state.error);
+          Navigator.pop(context);
+          Fluttertoast.showToast(msg: state.error);
         }
       });
   }

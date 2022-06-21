@@ -11,9 +11,15 @@ class RegistrationDone extends RegistrationState {
 
   RegistrationDone(this.response);
 }
+
 class LoginDone extends RegistrationState {
   final LoginResponse response;
 
   LoginDone(this.response);
 }
-class RegistrationError extends RegistrationState {}
+
+class RegistrationError extends RegistrationState {
+  final String error;
+
+  RegistrationError(this.error);
+}

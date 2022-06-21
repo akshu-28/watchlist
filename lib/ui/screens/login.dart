@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
 import 'package:watchlist/bloc/registration/registration_bloc.dart';
@@ -40,6 +41,11 @@ class _LoginPageState extends State<LoginPage> {
         if (state is LoginDone) {
           Navigator.pop(context);
           Navigator.pushNamed(context, "/watchlist");
+        }
+        if (state is RegistrationError) {
+          log(state.error);
+          Navigator.pop(context);
+          Fluttertoast.showToast(msg: state.error);
         }
       });
   }
@@ -89,6 +95,7 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       _otpCode = otpCode;
       if (otpCode.length == otpCodeLength && !isAutofill) {
+        LoaderWidget().showLoader(context, text: "Please wait..");
         enableButton = true;
         isLoadingButton = false;
         _verifyOtpCode();
@@ -105,9 +112,6 @@ class _LoginPageState extends State<LoginPage> {
         isLoadingButton = false;
         enableButton = false;
       });
-      final scaffoldKey = GlobalKey<ScaffoldState>();
-      scaffoldKey.currentState?.showSnackBar(
-          SnackBar(content: Text("Verification OTP Code $_otpCode Success")));
 
       context.read<RegistrationBloc>().add(LoginRequestEvent(LoginRequest(
           request: Request(
@@ -155,7 +159,6 @@ class _LoginPageState extends State<LoginPage> {
                     border: Border.all(color: Colors.grey)),
                 selectedDecoration: _pinPutDecoration,
                 onChange: (code) {
-                  LoaderWidget().showLoader(context, text: "Please wait..");
                   _onOtpCallBack(code, false);
                 }),
           ),
