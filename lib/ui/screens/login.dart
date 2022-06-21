@@ -2,8 +2,12 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
+import 'package:watchlist/bloc/registration/registration_bloc.dart';
+import 'package:watchlist/model/login_request.dart';
+import 'package:watchlist/model/registration_request.dart' as reg;
 import 'package:watchlist/ui/widgets/app_scaffold.dart';
 import 'package:watchlist/ui/widgets/text_widget.dart';
 
@@ -21,11 +25,19 @@ class _LoginPageState extends State<LoginPage> {
   bool enableButton = false;
   final intRegex = RegExp(r'\d+', multiLine: true);
   TextEditingController textEditingController = TextEditingController(text: "");
+  late RegistrationBloc registrationBloc;
   @override
   void initState() {
     super.initState();
     _getSignatureCode();
     _startListeningSms();
+    registrationBloc = BlocProvider.of<RegistrationBloc>(context)
+      ..stream.listen((state) {
+        if (state is RegistrationDone) {}
+        if (state is LoginDone) {
+          Navigator.pushNamed(context, "/watchlist");
+        }
+      });
   }
 
   @override
@@ -50,8 +62,10 @@ class _LoginPageState extends State<LoginPage> {
   /// listen sms
   _startListeningSms() {
     SmsVerification.startListeningSms().then((message) {
+      log("listen");
       setState(() {
         _otpCode = SmsVerification.getCode(message, intRegex);
+        log(_otpCode);
         textEditingController.text = _otpCode;
         _onOtpCallBack(_otpCode, true);
       });
@@ -70,13 +84,10 @@ class _LoginPageState extends State<LoginPage> {
   _onOtpCallBack(String otpCode, bool isAutofill) {
     setState(() {
       _otpCode = otpCode;
-      if (otpCode.length == otpCodeLength && isAutofill) {
-        enableButton = false;
-        isLoadingButton = true;
-        _verifyOtpCode();
-      } else if (otpCode.length == otpCodeLength && !isAutofill) {
+      if (otpCode.length == otpCodeLength && !isAutofill) {
         enableButton = true;
         isLoadingButton = false;
+        _verifyOtpCode();
       } else {
         enableButton = false;
       }
@@ -90,9 +101,15 @@ class _LoginPageState extends State<LoginPage> {
         isLoadingButton = false;
         enableButton = false;
       });
-      //final scaffoldKey = GlobalKey<ScaffoldState>();
-      /*     scaffoldKey.currentState?.showSnackBar(
-          SnackBar(content: Text("Verification OTP Code $_otpCode Success"))); */
+      final scaffoldKey = GlobalKey<ScaffoldState>();
+      scaffoldKey.currentState?.showSnackBar(
+          SnackBar(content: Text("Verification OTP Code $_otpCode Success")));
+
+      context.read<RegistrationBloc>().add(LoginRequestEvent(LoginRequest(
+          request: Request(
+              data: Data(
+                  mobNo: "+918248121331", otp: _otpCode, userType: "virtual"),
+              appID: "45370504ab27eed7327a1df46403a30a"))));
     });
   }
 
@@ -142,7 +159,12 @@ class _LoginPageState extends State<LoginPage> {
             child: Center(
                 child: TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, "/watchlist");
+                      context.read<RegistrationBloc>().add(
+                          RegistrationRequestEvent(reg.RegistrationRequest(
+                              request: reg.Request(
+                                  data: reg.Data(mobNo: "+918248121331"),
+                                  appID: "f79f65f1b98e116f40633dbb46fd5e21"))));
+                      //  Navigator.pushNamed(context, "/watchlist");
                     },
                     child: const TextWidget(
                       "Resend OTP",

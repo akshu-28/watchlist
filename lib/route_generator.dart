@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:watchlist/bloc/registration/registration_bloc.dart';
 import 'package:watchlist/ui/screens/acknow_page.dart';
 import 'package:watchlist/ui/screens/confirm_page.dart';
 import 'package:watchlist/ui/screens/login.dart';
@@ -15,9 +16,17 @@ class RouteGenerator {
     final args = settings.arguments;
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => const Registration());
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => RegistrationBloc(),
+                  child: const Registration(),
+                ));
       case '/loginpage':
-        return MaterialPageRoute(builder: (_) => const LoginPage());
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => RegistrationBloc(),
+                  child: const LoginPage(),
+                ));
       case '/watchlist':
         return MaterialPageRoute(
             builder: (_) => BlocProvider(

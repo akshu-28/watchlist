@@ -3,15 +3,15 @@ class RegistrationResponse {
     required this.response,
   });
   late final Response response;
-  
-  RegistrationResponse.fromJson(Map<String, dynamic> json){
+
+  RegistrationResponse.fromJson(Map<String, dynamic> json) {
     response = Response.fromJson(json['response']);
   }
 
   Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['response'] = response.toJson();
-    return data;
+    final _data = <String, dynamic>{};
+    _data['response'] = response.toJson();
+    return _data;
   }
 }
 
@@ -26,8 +26,8 @@ class Response {
   late final Data data;
   late final String infoMsg;
   late final String msgID;
-  
-  Response.fromJson(Map<String, dynamic> json){
+
+  Response.fromJson(Map<String, dynamic> json) {
     infoID = json['infoID'];
     data = Data.fromJson(json['data']);
     infoMsg = json['infoMsg'];
@@ -35,28 +35,22 @@ class Response {
   }
 
   Map<String, dynamic> toJson() {
-    final datas = <String, dynamic>{};
-    datas['infoID'] = infoID;
-    datas['data'] = data.toJson();
-    datas['infoMsg'] = infoMsg;
-    datas['msgID'] = msgID;
-    return datas;
+    final _data = <String, dynamic>{};
+    _data['infoID'] = infoID;
+    _data['data'] = data.toJson();
+    _data['infoMsg'] = infoMsg;
+    _data['msgID'] = msgID;
+    return _data;
   }
 }
 
 class Data {
-  Data({
-    required this.otp,
-  });
-  late final String otp;
-  
-  Data.fromJson(Map<String, dynamic> json){
-    otp = json['otp'];
-  }
+  Data();
+
+  Data.fromJson(Map json);
 
   Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['otp'] = otp;
-    return data;
+    final _data = <String, dynamic>{};
+    return _data;
   }
 }

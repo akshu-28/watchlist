@@ -39,6 +39,7 @@ dependencies:
   expandable: ^5.0.1
   flutter_otp_text_field: ^1.0.1
   sms_otp_auto_verify: ^2.1.0
+  sms_autofill: ^2.2.0
 
 dev_dependencies:
   flutter_test:

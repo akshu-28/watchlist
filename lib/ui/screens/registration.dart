@@ -1,6 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sms_autofill/sms_autofill.dart';
+import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
+import 'package:watchlist/bloc/registration/registration_bloc.dart';
+import 'package:watchlist/model/registration_request.dart';
 import 'package:watchlist/ui/widgets/app_scaffold.dart';
 import 'package:watchlist/ui/widgets/text_widget.dart';
 
@@ -12,6 +17,23 @@ class Registration extends StatefulWidget {
 }
 
 class _RegistrationState extends State<Registration> {
+  late RegistrationBloc registrationBloc;
+  final intRegex = RegExp(r'\d+', multiLine: true);
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    registrationBloc = BlocProvider.of<RegistrationBloc>(context)
+      ..stream.listen((state) {
+        if (state is RegistrationDone) {
+          log(state.response.response.infoMsg);
+
+          Navigator.pushNamed(context, "/loginpage");
+        }
+      });
+  }
+
   TextEditingController userInput = TextEditingController();
   bool agree = false;
   @override
@@ -36,7 +58,7 @@ class _RegistrationState extends State<Registration> {
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 20),
                   child: TextWidget(
-                    "A 6-digit OTP will be sent in SMS to verify your \n mobile number",
+                    "A 4-digit OTP will be sent in SMS to verify your \n mobile number",
                     size: 17,
                     color: Colors.grey,
                   ),
@@ -102,7 +124,7 @@ class _RegistrationState extends State<Registration> {
                         ),
                       ),
                     ),
-                  ],   
+                  ],
                 ),
                 Padding(
                   padding: EdgeInsets.only(
@@ -133,7 +155,13 @@ class _RegistrationState extends State<Registration> {
                         backgroundColor: Colors.blue[700],
                       ),
                       onPressed: () {
-                        Navigator.pushNamed(context, "/loginpage");
+                        context.read<RegistrationBloc>().add(
+                            RegistrationRequestEvent(RegistrationRequest(
+                                request: Request(
+                                    data: Data(mobNo: "+91${userInput.text}"),
+                                    appID:
+                                        "f79f65f1b98e116f40633dbb46fd5e21"))));
+                        //Navigator.pushNamed(context, "/loginpage");
                       },
                       child: Container(
                         alignment: Alignment.center,

@@ -3,8 +3,8 @@ class RegistrationRequest {
     required this.request,
   });
   late final Request request;
-
-  RegistrationRequest.fromJson(Map<String, dynamic> json) {
+  
+  RegistrationRequest.fromJson(Map<String, dynamic> json){
     request = Request.fromJson(json['request']);
   }
 
@@ -22,8 +22,8 @@ class Request {
   });
   late final Data data;
   late final String appID;
-
-  Request.fromJson(Map<String, dynamic> json) {
+  
+  Request.fromJson(Map<String, dynamic> json){
     data = Data.fromJson(json['data']);
     appID = json['appID'];
   }
@@ -39,20 +39,16 @@ class Request {
 class Data {
   Data({
     required this.mobNo,
-    required this.userType,
   });
   late final String mobNo;
-  late final String userType;
-
-  Data.fromJson(Map<String, dynamic> json) {
+  
+  Data.fromJson(Map<String, dynamic> json){
     mobNo = json['mobNo'];
-    userType = json['userType'];
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['mobNo'] = mobNo;
-    data['userType'] = userType;
     return data;
   }
 }
