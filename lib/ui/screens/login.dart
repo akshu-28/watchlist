@@ -9,6 +9,7 @@ import 'package:watchlist/bloc/registration/registration_bloc.dart';
 import 'package:watchlist/model/login_request.dart';
 import 'package:watchlist/model/registration_request.dart' as reg;
 import 'package:watchlist/ui/widgets/app_scaffold.dart';
+import 'package:watchlist/ui/widgets/loader_widget.dart';
 import 'package:watchlist/ui/widgets/text_widget.dart';
 
 class LoginPage extends StatefulWidget {
@@ -33,8 +34,11 @@ class _LoginPageState extends State<LoginPage> {
     _startListeningSms();
     registrationBloc = BlocProvider.of<RegistrationBloc>(context)
       ..stream.listen((state) {
-        if (state is RegistrationDone) {}
+        if (state is RegistrationDone) {
+          Navigator.pop(context);
+        }
         if (state is LoginDone) {
+          Navigator.pop(context);
           Navigator.pushNamed(context, "/watchlist");
         }
       });
@@ -151,6 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                     border: Border.all(color: Colors.grey)),
                 selectedDecoration: _pinPutDecoration,
                 onChange: (code) {
+                  LoaderWidget().showLoader(context, text: "Please wait..");
                   _onOtpCallBack(code, false);
                 }),
           ),
@@ -159,12 +164,12 @@ class _LoginPageState extends State<LoginPage> {
             child: Center(
                 child: TextButton(
                     onPressed: () {
+                      LoaderWidget().showLoader(context, text: "Please wait..");
                       context.read<RegistrationBloc>().add(
                           RegistrationRequestEvent(reg.RegistrationRequest(
                               request: reg.Request(
                                   data: reg.Data(mobNo: "+918248121331"),
                                   appID: "f79f65f1b98e116f40633dbb46fd5e21"))));
-                      //  Navigator.pushNamed(context, "/watchlist");
                     },
                     child: const TextWidget(
                       "Resend OTP",

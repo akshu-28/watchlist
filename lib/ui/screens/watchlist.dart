@@ -34,10 +34,10 @@ class _WatchlistState extends State<Watchlist> {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Padding(
-              padding: EdgeInsets.symmetric(vertical: 35),
+              padding: EdgeInsets.symmetric(vertical: 30),
               child: TextWidget(
                 "MSIL WatchLIST",
-                size: 18,
+                size: 20,
                 fontweight: FontWeight.bold,
               ),
             ),
