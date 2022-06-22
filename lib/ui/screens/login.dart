@@ -129,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
     return Appscaffold(
         title: InkWell(
           onTap: () {
-            Navigator.pushReplacementNamed(context, "/watchlist");
+            Navigator.pushReplacementNamed(context, "/");
           },
           child: Row(children: const [
             Icon(

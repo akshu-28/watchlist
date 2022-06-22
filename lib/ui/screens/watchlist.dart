@@ -28,25 +28,39 @@ class _WatchlistState extends State<Watchlist> {
   @override
   Widget build(BuildContext context) {
     return Appscaffold(
-      body: SingleChildScrollView(
-        physics: const NeverScrollableScrollPhysics(),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 30),
-              child: TextWidget(
-                "MSIL WatchLIST",
-                size: 20,
-                fontweight: FontWeight.bold,
-              ),
+      title: InkWell(
+        onTap: () {
+          Navigator.pushReplacementNamed(context, "/");
+        },
+        child: Row(children: const [
+          Icon(
+            Icons.arrow_back_ios,
+            color: Colors.blue,
+          ),
+          TextWidget(
+            "Back",
+            color: Colors.blue,
+          )
+        ]),
+      ),
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 30),
+            child: TextWidget(
+              "MSIL WatchLIST",
+              size: 20,
+              fontweight: FontWeight.bold,
             ),
-            BlocBuilder<WatchlistBloc, WatchlistState>(
-              builder: (context, state) {
-                if (state is WatchlistDone) {
-                  Data watchlist = state.watchlist.response.data;
-                  return ListView.separated(
-                    physics: const BouncingScrollPhysics(),
+          ),
+          BlocBuilder<WatchlistBloc, WatchlistState>(
+            builder: (context, state) {
+              if (state is WatchlistDone) {
+                Data watchlist = state.watchlist.response.data;
+                return Expanded(
+                  child: ListView.separated(
+                    physics: const AlwaysScrollableScrollPhysics(),
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     itemCount: watchlist.symbols.length,
                     shrinkWrap: true,
@@ -108,15 +122,15 @@ class _WatchlistState extends State<Watchlist> {
 
                       //bodyData(context, watchlist, index);
                     },
-                  );
-                }
+                  ),
+                );
+              }
 
-                if (state is WatchlistError) return const ErrorsWidget();
-                return loadData(context);
-              },
-            ),
-          ],
-        ),
+              if (state is WatchlistError) return const ErrorsWidget();
+              return loadData(context);
+            },
+          ),
+        ],
       ),
     );
   }
