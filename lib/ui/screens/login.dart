@@ -14,7 +14,8 @@ import 'package:watchlist/ui/widgets/loader_widget.dart';
 import 'package:watchlist/ui/widgets/text_widget.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final String mobileNumber;
+  const LoginPage({Key? key, required this.mobileNumber}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -116,7 +117,9 @@ class _LoginPageState extends State<LoginPage> {
       context.read<RegistrationBloc>().add(LoginRequestEvent(LoginRequest(
           request: Request(
               data: Data(
-                  mobNo: "+918248121331", otp: _otpCode, userType: "virtual"),
+                  mobNo: "+91${widget.mobileNumber}",
+                  otp: _otpCode,
+                  userType: "virtual"),
               appID: "45370504ab27eed7327a1df46403a30a"))));
     });
   }
@@ -124,64 +127,84 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Appscaffold(
-        body: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 10),
-            child: TextWidget(
-              "OTP Verification",
-              size: 25,
+        title: InkWell(
+          onTap: () {
+            Navigator.pushReplacementNamed(context, "/watchlist");
+          },
+          child: Row(children: const [
+            Icon(
+              Icons.arrow_back_ios,
+              color: Colors.blue,
+            ),
+            TextWidget(
+              "MSIL WatchList Login",
+              color: Colors.blue,
+            )
+          ]),
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  child: TextWidget(
+                    "OTP Verification",
+                    size: 25,
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 7),
+                  child: TextWidget(
+                    "OTP will be automatically verified",
+                    color: Colors.grey,
+                    size: 18,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: TextFieldPin(
+                      textController: textEditingController,
+                      autoFocus: true,
+                      codeLength: otpCodeLength,
+                      alignment: MainAxisAlignment.center,
+                      defaultBoxSize: 46.0,
+                      margin: 10,
+                      selectedBoxSize: 46.0,
+                      textStyle: const TextStyle(fontSize: 16),
+                      defaultDecoration: _pinPutDecoration.copyWith(
+                          border: Border.all(color: Colors.grey)),
+                      selectedDecoration: _pinPutDecoration,
+                      onChange: (code) {
+                        _onOtpCallBack(code, false);
+                      }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 30),
+                  child: Center(
+                      child: TextButton(
+                          onPressed: () {
+                            LoaderWidget()
+                                .showLoader(context, text: "Please wait..");
+                            context.read<RegistrationBloc>().add(
+                                RegistrationRequestEvent(reg.RegistrationRequest(
+                                    request: reg.Request(
+                                        data: reg.Data(
+                                            mobNo: "+91${widget.mobileNumber}"),
+                                        appID:
+                                            "f79f65f1b98e116f40633dbb46fd5e21"))));
+                          },
+                          child: const TextWidget(
+                            "Resend OTP",
+                            size: 19,
+                            color: Colors.blue,
+                          ))),
+                )
+              ],
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 7),
-            child: TextWidget(
-              "OTP will be automatically verified",
-              color: Colors.grey,
-              size: 18,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: TextFieldPin(
-                textController: textEditingController,
-                autoFocus: true,
-                codeLength: otpCodeLength,
-                alignment: MainAxisAlignment.center,
-                defaultBoxSize: 46.0,
-                margin: 10,
-                selectedBoxSize: 46.0,
-                textStyle: const TextStyle(fontSize: 16),
-                defaultDecoration: _pinPutDecoration.copyWith(
-                    border: Border.all(color: Colors.grey)),
-                selectedDecoration: _pinPutDecoration,
-                onChange: (code) {
-                  _onOtpCallBack(code, false);
-                }),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 30),
-            child: Center(
-                child: TextButton(
-                    onPressed: () {
-                      LoaderWidget().showLoader(context, text: "Please wait..");
-                      context.read<RegistrationBloc>().add(
-                          RegistrationRequestEvent(reg.RegistrationRequest(
-                              request: reg.Request(
-                                  data: reg.Data(mobNo: "+918248121331"),
-                                  appID: "f79f65f1b98e116f40633dbb46fd5e21"))));
-                    },
-                    child: const TextWidget(
-                      "Resend OTP",
-                      size: 19,
-                      color: Colors.blue,
-                    ))),
-          )
-        ],
-      ),
-    ));
+        ));
   }
 }

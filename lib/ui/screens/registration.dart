@@ -29,7 +29,7 @@ class _RegistrationState extends State<Registration> {
         if (state is RegistrationDone) {
           log(state.response.response.infoMsg);
           Navigator.pop(context);
-          Navigator.pushNamed(context, "/loginpage");
+          Navigator.pushNamed(context, "/loginpage", arguments: userInput.text);
         }
         if (state is RegistrationError) {
           log(state.error);
@@ -47,9 +47,13 @@ class _RegistrationState extends State<Registration> {
     return Form(
       key: formKey,
       child: Appscaffold(
-          title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [Text("MSIL WatchList Login")]),
+          title:
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
+            TextWidget(
+              "MSIL WatchList Login",
+              fontweight: FontWeight.w600,
+            )
+          ]),
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 40),
@@ -83,7 +87,7 @@ class _RegistrationState extends State<Registration> {
                     children: [
                       SizedBox(
                         height: 50,
-                        width: MediaQuery.of(context).size.width * 0.15,
+                        width: MediaQuery.of(context).size.width * 0.16,
                         child: TextFormField(
                           initialValue: "+91",
                           readOnly: true,
@@ -109,7 +113,7 @@ class _RegistrationState extends State<Registration> {
                       ),
                       SizedBox(
                         height: 50,
-                        width: MediaQuery.of(context).size.width * 0.73,
+                        width: MediaQuery.of(context).size.width * 0.71,
                         child: TextFormField(
                           controller: userInput,
                           validator: (value) {

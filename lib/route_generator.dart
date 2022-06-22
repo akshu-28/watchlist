@@ -25,7 +25,7 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                   create: (context) => RegistrationBloc(),
-                  child: const LoginPage(),
+                  child:  LoginPage(mobileNumber: args as String),
                 ));
       case '/watchlist':
         return MaterialPageRoute(

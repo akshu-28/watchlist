@@ -170,7 +170,8 @@ class _WatchlistState extends State<Watchlist> {
                     child: TextWidget(
                       watchlist.symbols[index].excToken.toString(),
                       color: Colors.red,
-                      size: 15,
+                      size: 14,
+                      fontweight: FontWeight.w500,
                     ),
                   ),
                   const Divider(
@@ -186,12 +187,14 @@ class _WatchlistState extends State<Watchlist> {
                           watchlist.symbols[index].haircut.toString(),
                           color: Colors.orange,
                           size: 13,
+                          fontweight: FontWeight.w400,
                         ),
                       ),
                       TextWidget(
                         watchlist.symbols[index].sym.lotSize.toString(),
                         color: Colors.green,
                         size: 13,
+                        fontweight: FontWeight.w400,
                       )
                     ],
                   )
