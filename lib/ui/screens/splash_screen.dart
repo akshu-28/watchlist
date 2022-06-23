@@ -2,17 +2,15 @@ import 'dart:async';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:watchlist/ui/widgets/text_widget.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  SplashScreenState createState() => SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
+class SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
   Color baseColor = const Color(0xFFf2f2f2);
   double firstDepth = 50;
@@ -45,9 +43,7 @@ class _SplashScreenState extends State<SplashScreen>
         AnimationController(duration: const Duration(seconds: 4), vsync: this);
     animation = Tween<double>(begin: 50, end: 300).animate(controller)
       ..addListener(() {
-        setState(() {
-          // The state that has changed here is the animation object’s value.
-        });
+        setState(() {});
       });
     controller.forward();
     _animationController.forward();
