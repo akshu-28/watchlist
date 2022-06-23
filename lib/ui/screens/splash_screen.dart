@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:watchlist/ui/widgets/text_widget.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -28,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
     Timer(
-      const Duration(seconds: 4),
+      const Duration(seconds: 3),
       () => navigationPage(),
     );
 
@@ -51,7 +53,9 @@ class _SplashScreenState extends State<SplashScreen>
     _animationController.forward();
   }
 
-  void navigationPage() {}
+  void navigationPage() {
+    Navigator.pushReplacementNamed(context, "/register");
+  }
 
   @override
   void dispose() {
@@ -63,15 +67,46 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SizedBox(
+        body: Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+        begin: Alignment.topRight,
+        end: Alignment.bottomLeft,
+        colors: [
+          Colors.green[200]!,
+          Colors.white,
+        ],
+      )),
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
-            "lib/assets/logo_icon.png",
-            fit: BoxFit.cover,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 40),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  "lib/assets/logo_icon.png",
+                  width: 70,
+                ),
+                DefaultTextStyle(
+                  style: const TextStyle(
+                      fontSize: 30.0,
+                      fontFamily: "horizon",
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                  child: AnimatedTextKit(
+                    animatedTexts: [
+                      TyperAnimatedText('Watchlist'),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ],
       ),

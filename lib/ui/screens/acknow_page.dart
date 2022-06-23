@@ -30,7 +30,7 @@ class Acknowledge extends StatelessWidget {
               alignment: Alignment.bottomRight,
               child: TextButton(
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, "/");
+                    Navigator.pushReplacementNamed(context, "/register");
                   },
                   child: const TextWidget(
                     "LogOut",

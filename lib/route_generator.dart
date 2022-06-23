@@ -18,7 +18,7 @@ class RouteGenerator {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (_) => const SplashScreen());
-      case '/regsiter':
+      case '/register':
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                   create: (context) => RegistrationBloc(),
