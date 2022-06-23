@@ -6,6 +6,7 @@ import 'package:watchlist/ui/screens/acknow_page.dart';
 import 'package:watchlist/ui/screens/confirm_page.dart';
 import 'package:watchlist/ui/screens/login.dart';
 import 'package:watchlist/ui/screens/registration.dart';
+import 'package:watchlist/ui/screens/splash_screen.dart';
 
 import 'package:watchlist/ui/screens/watchlist.dart';
 
@@ -16,6 +17,8 @@ class RouteGenerator {
     final args = settings.arguments;
     switch (settings.name) {
       case '/':
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
+      case '/regsiter':
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                   create: (context) => RegistrationBloc(),
@@ -25,7 +28,7 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                   create: (context) => RegistrationBloc(),
-                  child:  LoginPage(mobileNumber: args as String),
+                  child: LoginPage(mobileNumber: args as String),
                 ));
       case '/watchlist':
         return MaterialPageRoute(

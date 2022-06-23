@@ -50,12 +50,6 @@ class _LoginPageState extends State<LoginPage> {
       });
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    SmsVerification.stopListening();
-  }
-
   BoxDecoration get _pinPutDecoration {
     return BoxDecoration(
       border: Border.all(color: Colors.grey),
@@ -100,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
     return Appscaffold(
         title: InkWell(
           onTap: () {
-            Navigator.pushReplacementNamed(context, "/");
+            Navigator.pushReplacementNamed(context, "/regsiter");
           },
           child: Row(children: const [
             Icon(

@@ -28,21 +28,6 @@ class _WatchlistState extends State<Watchlist> {
   @override
   Widget build(BuildContext context) {
     return Appscaffold(
-      title: InkWell(
-        onTap: () {
-          Navigator.pushReplacementNamed(context, "/");
-        },
-        child: Row(children: const [
-          Icon(
-            Icons.arrow_back_ios,
-            color: Colors.blue,
-          ),
-          TextWidget(
-            "Back",
-            color: Colors.blue,
-          )
-        ]),
-      ),
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
