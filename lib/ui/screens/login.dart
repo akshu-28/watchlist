@@ -32,8 +32,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    _getSignatureCode();
-    _startListeningSms();
+
     registrationBloc = BlocProvider.of<RegistrationBloc>(context)
       ..stream.listen((state) {
         if (state is RegistrationDone) {
@@ -63,34 +62,6 @@ class _LoginPageState extends State<LoginPage> {
       borderRadius: BorderRadius.circular(10.0),
     );
   }
-
-  /// get signature code
-  _getSignatureCode() async {
-    String? signature = await SmsVerification.getAppSignature();
-    log("signature $signature");
-  }
-
-  /// listen sms
-  _startListeningSms() {
-    SmsVerification.startListeningSms().then((message) {
-      log("listen");
-      setState(() {
-        _otpCode = SmsVerification.getCode(message, intRegex);
-        log(_otpCode);
-        textEditingController.text = _otpCode;
-        _onOtpCallBack(_otpCode, true);
-      });
-    });
-  }
-
-  /*  _onSubmitOtp() {
-    setState(() {
-      isLoadingButton = !isLoadingButton;
-      _verifyOtpCode();
-    });
-  } */
-
-/*  s */
 
   _onOtpCallBack(String otpCode, bool isAutofill) {
     setState(() {

@@ -90,13 +90,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
-  flutter_otp_text_field:
-    dependency: "direct main"
-    description:
-      name: flutter_otp_text_field
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -177,13 +170,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.1"
-  pin_input_text_field:
-    dependency: transitive
-    description:
-      name: pin_input_text_field
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.1.2"
   provider:
     dependency: transitive
     description:
@@ -196,13 +182,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
-  sms_autofill:
-    dependency: "direct main"
-    description:
-      name: sms_autofill
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.2.0"
   sms_otp_auto_verify:
     dependency: "direct main"
     description:
