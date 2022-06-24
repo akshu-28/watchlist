@@ -206,7 +206,7 @@ class _WatchlistState extends State<Watchlist> {
 
   Widget loadData(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.8,
+      height: MediaQuery.of(context).size.height * 0.7,
       child: Center(
           child: CircularProgressIndicator(
         color: Theme.of(context).primaryColor,
