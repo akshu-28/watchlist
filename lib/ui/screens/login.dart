@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
         if (state is RegistrationError) {
           log(state.error);
           Navigator.pop(context);
-          Fluttertoast.showToast(msg: state.error);
+          Fluttertoast.showToast(msg: state.error, backgroundColor: Colors.red);
         }
       });
   }
