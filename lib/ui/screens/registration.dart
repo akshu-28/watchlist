@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:watchlist/bloc/registration/registration_bloc.dart';
+import 'package:watchlist/constants/app_constants.dart';
+import 'package:watchlist/constants/route_name.dart';
 import 'package:watchlist/model/registration_request.dart';
 import 'package:watchlist/ui/widgets/app_scaffold.dart';
 import 'package:watchlist/ui/widgets/loader_widget.dart';
@@ -25,11 +27,13 @@ class _RegistrationState extends State<Registration> {
     super.initState();
 
     registrationBloc = BlocProvider.of<RegistrationBloc>(context)
+      ..add(AgreeEvent(false))
       ..stream.listen((state) {
         if (state is RegistrationDone) {
           log(state.response.response.infoMsg);
           Navigator.pop(context);
-          Navigator.pushNamed(context, "/loginpage", arguments: userInput.text);
+          Navigator.pushNamed(context, RouteName.loginScreen,
+              arguments: (ccode.text + phoneNo.text));
         }
         if (state is RegistrationError) {
           log(state.error);
@@ -40,7 +44,8 @@ class _RegistrationState extends State<Registration> {
   }
 
   final formKey = GlobalKey<FormState>();
-  TextEditingController userInput = TextEditingController();
+  TextEditingController phoneNo = TextEditingController();
+  TextEditingController ccode = TextEditingController(text: "+91");
   bool agree = false;
   @override
   Widget build(BuildContext context) {
@@ -50,7 +55,7 @@ class _RegistrationState extends State<Registration> {
           title:
               Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
             TextWidget(
-              "MSIL WatchList Login",
+              AppConstants.watchlistLogin,
               fontweight: FontWeight.w600,
             )
           ]),
@@ -63,14 +68,14 @@ class _RegistrationState extends State<Registration> {
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 10),
                     child: TextWidget(
-                      "Enter Your Mobile Number",
+                      AppConstants.enterMobileNo,
                       size: 25,
                     ),
                   ),
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 20),
                     child: TextWidget(
-                      "A 4-digit OTP will be sent in SMS to verify your \n mobile number",
+                      AppConstants.otpinSms,
                       size: 17,
                       color: Colors.grey,
                     ),
@@ -78,7 +83,7 @@ class _RegistrationState extends State<Registration> {
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 25),
                     child: TextWidget(
-                      "Phone Number",
+                      AppConstants.phNo,
                       size: 19,
                     ),
                   ),
@@ -86,18 +91,28 @@ class _RegistrationState extends State<Registration> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       SizedBox(
-                        height: 50,
                         width: MediaQuery.of(context).size.width * 0.16,
                         child: TextFormField(
-                          initialValue: "+91",
-                          readOnly: true,
+                          controller: ccode,
                           style: const TextStyle(
                             fontSize: 16,
                             color: Colors.black,
                             fontWeight: FontWeight.w400,
                           ),
                           decoration: InputDecoration(
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.grey, width: 0.5),
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
                             focusColor: Colors.white,
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 10),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.grey, width: 0.5),
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
                                   color: Colors.grey, width: 0.5),
@@ -112,13 +127,12 @@ class _RegistrationState extends State<Registration> {
                         ),
                       ),
                       SizedBox(
-                        height: 50,
                         width: MediaQuery.of(context).size.width * 0.71,
                         child: TextFormField(
-                          controller: userInput,
+                          controller: phoneNo,
                           validator: (value) {
                             if (value!.isEmpty || value.length < 10) {
-                              return "Please enter valid mobile number";
+                              return AppConstants.mobileValidation;
                             }
                             return null;
                           },
@@ -129,7 +143,20 @@ class _RegistrationState extends State<Registration> {
                             fontWeight: FontWeight.w400,
                           ),
                           decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 10),
                             focusColor: Colors.white,
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.grey, width: 0.5),
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.grey, width: 0.5),
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                            isCollapsed: false,
                             enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
                                   color: Colors.grey, width: 0.5),
@@ -150,17 +177,28 @@ class _RegistrationState extends State<Registration> {
                         top: MediaQuery.of(context).size.height * 0.08),
                     child: Row(
                       children: [
-                        Checkbox(
-                          value: agree,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              agree = value ?? false;
-                              log(agree.toString());
-                            });
+                        BlocBuilder<RegistrationBloc, RegistrationState>(
+                          buildWhen: (previous, current) =>
+                              current is AgreeState,
+                          builder: (context, state) {
+                            if (state is AgreeState) {
+                              log(state.isAgree.toString());
+                              agree = state.isAgree;
+
+                              return Checkbox(
+                                value: agree,
+                                onChanged: (bool? value) {
+                                  registrationBloc
+                                      .add(AgreeEvent(value ?? false));
+                                },
+                              );
+                            } else {
+                              return Container();
+                            }
                           },
                         ),
                         const TextWidget(
-                          "Agree to our Terms and Conditions",
+                          AppConstants.agreeTerms,
                           size: 18,
                         )
                       ],
@@ -176,19 +214,19 @@ class _RegistrationState extends State<Registration> {
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
                             if (agree) {
-                              LoaderWidget()
-                                  .showLoader(context, text: "Please wait");
+                              LoaderWidget().showLoader(context,
+                                  text: AppConstants.pleaseWait);
                               context.read<RegistrationBloc>().add(
                                   RegistrationRequestEvent(RegistrationRequest(
                                       request: Request(
                                           data: Data(
-                                              mobNo: "+91${userInput.text}"),
+                                              mobNo:
+                                                  "${ccode.text}${phoneNo.text}"),
                                           appID:
                                               "f79f65f1b98e116f40633dbb46fd5e21"))));
                             } else {
                               Fluttertoast.showToast(
-                                  msg:
-                                      "Please agree to our terms and conditons",
+                                  msg: AppConstants.pleaseAgree,
                                   backgroundColor: Colors.red);
                             }
                           }
@@ -198,7 +236,7 @@ class _RegistrationState extends State<Registration> {
                           padding: const EdgeInsets.symmetric(vertical: 5),
                           width: MediaQuery.of(context).size.width * 0.85,
                           child: const TextWidget(
-                            "Generate OTP",
+                            AppConstants.generateOtp,
                             color: Colors.white,
                             size: 20,
                           ),

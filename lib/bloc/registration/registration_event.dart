@@ -7,8 +7,11 @@ class RegistrationRequestEvent extends RegistrationEvent {
 
   RegistrationRequestEvent(this.registrationRequest);
 }
-class LoginRequestEvent extends RegistrationEvent {
-  final LoginRequest loginRequest;
 
-  LoginRequestEvent(this.loginRequest);
+class AgreeEvent extends RegistrationEvent {
+  final bool agree;
+
+  AgreeEvent(this.agree);
 }
+
+

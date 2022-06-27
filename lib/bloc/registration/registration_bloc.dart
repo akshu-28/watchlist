@@ -1,8 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:watchlist/model/login_request.dart';
-import 'package:watchlist/model/login_response.dart';
+
 import 'package:watchlist/model/registration_request.dart';
-import 'package:watchlist/repository/login_repo.dart';
+
 import 'package:watchlist/repository/registration_repo.dart';
 
 import '../../model/registration_response.dart';
@@ -22,14 +21,8 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
         emit(RegistrationError(e.toString()));
       }
     });
-    on<LoginRequestEvent>((event, emit) async {
-      emit(RegistrationLoad());
-      try {
-        var response = await LoginRepository().login(event.loginRequest);
-        emit(LoginDone(response));
-      } catch (e) {
-        emit(RegistrationError(e.toString()));
-      }
+    on<AgreeEvent>((event, emit) async {
+      emit(AgreeState(event.agree));
     });
   }
 }

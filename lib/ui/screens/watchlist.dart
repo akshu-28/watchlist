@@ -2,8 +2,10 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watchlist/bloc/watchlist/watchlist_bloc.dart';
+import 'package:watchlist/constants/app_constants.dart';
+import 'package:watchlist/constants/route_name.dart';
 import 'package:watchlist/model/watchlist_model.dart';
-import 'package:watchlist/ui/screens/confirm_page.dart';
+import 'package:watchlist/ui/screens/confirm_screen.dart';
 import 'package:watchlist/ui/widgets/app_scaffold.dart';
 
 import '../widgets/text_widget.dart';
@@ -34,7 +36,7 @@ class _WatchlistState extends State<Watchlist> {
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 30),
             child: TextWidget(
-              "MSIL WatchLIST",
+              AppConstants.watchlist,
               size: 20,
               fontweight: FontWeight.bold,
             ),
@@ -75,27 +77,27 @@ class _WatchlistState extends State<Watchlist> {
                                   TextButton(
                                       onPressed: () {
                                         Navigator.pushNamed(
-                                            context, "/confirmpage",
+                                            context, RouteName.confirmScreen,
                                             arguments: ConfirmArgs(
                                                 watchlist.symbols[index]));
                                       },
                                       style: TextButton.styleFrom(
                                           backgroundColor: Colors.green),
                                       child: const TextWidget(
-                                        "BUY",
+                                        AppConstants.buy,
                                         color: Colors.white,
                                       )),
                                   TextButton(
                                       onPressed: () {
                                         Navigator.pushNamed(
-                                            context, "/confirmpage",
+                                            context, RouteName.confirmScreen,
                                             arguments: ConfirmArgs(
                                                 watchlist.symbols[index]));
                                       },
                                       style: TextButton.styleFrom(
                                           backgroundColor: Colors.red),
                                       child: const TextWidget(
-                                        "SELL",
+                                        AppConstants.sell,
                                         color: Colors.white,
                                       ))
                                 ],

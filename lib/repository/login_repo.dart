@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:core';
 
+import 'package:watchlist/constants/api_url.dart';
 import 'package:watchlist/model/login_request.dart';
 import 'package:watchlist/resources/api_base_helper.dart';
 
@@ -9,7 +10,7 @@ import '../model/login_response.dart';
 class LoginRepository {
   Future<LoginResponse> login(LoginRequest product) async {
     var response = await ApiBaseHelper()
-        .postMethod(ApiBaseHelper.loginUrl, json.encode(product));
+        .postMethod(ApiUrls.loginUrl, json.encode(product));
 
     LoginResponse regResponse =
         LoginResponse.fromJson(json.decode(response.body));

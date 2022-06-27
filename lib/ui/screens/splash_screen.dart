@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:watchlist/constants/app_constants.dart';
+import 'package:watchlist/constants/route_name.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -35,22 +37,18 @@ class SplashScreenState extends State<SplashScreen>
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 4),
-    )..addListener(() {
-        setState(() {});
-      });
+    )..addListener(() {});
 
     controller =
         AnimationController(duration: const Duration(seconds: 4), vsync: this);
     animation = Tween<double>(begin: 50, end: 300).animate(controller)
-      ..addListener(() {
-        setState(() {});
-      });
+      ..addListener(() {});
     controller.forward();
     _animationController.forward();
   }
 
   void navigationPage() {
-    Navigator.pushReplacementNamed(context, "/register");
+    Navigator.pushReplacementNamed(context, RouteName.registerScreen);
   }
 
   @override
@@ -97,7 +95,7 @@ class SplashScreenState extends State<SplashScreen>
                       color: Colors.black),
                   child: AnimatedTextKit(
                     animatedTexts: [
-                      TyperAnimatedText('Watchlist'),
+                      TyperAnimatedText(AppConstants.watchlistTitle),
                     ],
                   ),
                 )

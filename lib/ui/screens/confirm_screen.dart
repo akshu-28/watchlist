@@ -1,6 +1,6 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:watchlist/constants/app_constants.dart';
+import 'package:watchlist/constants/route_name.dart';
 import 'package:watchlist/ui/widgets/app_scaffold.dart';
 import 'package:watchlist/ui/widgets/text_widget.dart';
 
@@ -26,7 +26,7 @@ class _ConfirmpageState extends State<Confirmpage> {
     return Appscaffold(
         title: InkWell(
           onTap: () {
-            Navigator.pushReplacementNamed(context, "/watchlist");
+            Navigator.pop(context);
           },
           child: Row(children: const [
             Icon(
@@ -45,29 +45,31 @@ class _ConfirmpageState extends State<Confirmpage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const TextWidget(
-                "MSIL WatchList",
+                AppConstants.watchlist,
                 size: 25,
               ),
               const SizedBox(
                 height: 20,
               ),
-              rowData(context, "Name", widget.args.data.excToken),
-              rowData(context, "Details", widget.args.data.companyName),
-              rowData(context, "LTP", widget.args.data.excToken),
-              rowData(context, "Change", widget.args.data.haircut),
-              rowData(context, "ChangePercent", widget.args.data.sym.lotSize),
+              rowData(context, AppConstants.name, widget.args.data.excToken),
+              rowData(
+                  context, AppConstants.detail, widget.args.data.companyName),
+              rowData(context, AppConstants.ltp, widget.args.data.excToken),
+              rowData(context, AppConstants.change, widget.args.data.haircut),
+              rowData(context, AppConstants.changePercent,
+                  widget.args.data.sym.lotSize),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, "/acknowpage");
+                      Navigator.pushNamed(context, RouteName.acknowScreen);
                     },
                     style: TextButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: 50),
                       backgroundColor: Colors.green,
                     ),
                     child: const TextWidget(
-                      "Submit",
+                      AppConstants.submit,
                       color: Colors.white,
                     )),
               )

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:watchlist/constants/route_name.dart';
 import 'package:watchlist/route_generator.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: "/",
+      initialRoute: RouteName.splashScreen,
       onGenerateRoute: RouteGenerator.generateRoute,
     );
   }

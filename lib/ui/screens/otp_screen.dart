@@ -6,7 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
+import 'package:watchlist/bloc/login/login_bloc.dart';
 import 'package:watchlist/bloc/registration/registration_bloc.dart';
+import 'package:watchlist/constants/app_constants.dart';
+import 'package:watchlist/constants/route_name.dart';
 import 'package:watchlist/model/login_request.dart';
 import 'package:watchlist/model/registration_request.dart' as reg;
 import 'package:watchlist/ui/widgets/app_scaffold.dart';
@@ -23,26 +26,37 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   int otpCodeLength = 4;
-  String _otpCode = "";
-  bool isLoadingButton = false;
-  bool enableButton = false;
-  final intRegex = RegExp(r'\d+', multiLine: true);
+  TextEditingController _otpCode = TextEditingController();
+
   TextEditingController textEditingController = TextEditingController(text: "");
+  late LoginBloc loginBloc;
   late RegistrationBloc registrationBloc;
   @override
   void initState() {
     super.initState();
-
     registrationBloc = BlocProvider.of<RegistrationBloc>(context)
+      ..stream.listen((state) {
+        if (state is RegistrationDone) {
+          Navigator.pop(context);
+        }
+
+        if (state is RegistrationError) {
+          log(state.error);
+          Navigator.pop(context);
+          Fluttertoast.showToast(msg: state.error, backgroundColor: Colors.red);
+        }
+      });
+
+    loginBloc = BlocProvider.of<LoginBloc>(context)
       ..stream.listen((state) {
         if (state is RegistrationDone) {
           Navigator.pop(context);
         }
         if (state is LoginDone) {
           Navigator.pop(context);
-          Navigator.pushNamed(context, "/watchlist");
+          Navigator.pushNamed(context, RouteName.watchlistScreen);
         }
-        if (state is RegistrationError) {
+        if (state is LoginError) {
           log(state.error);
           Navigator.pop(context);
           Fluttertoast.showToast(msg: state.error, backgroundColor: Colors.red);
@@ -58,32 +72,22 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _onOtpCallBack(String otpCode, bool isAutofill) {
-    setState(() {
-      _otpCode = otpCode;
-      if (otpCode.length == otpCodeLength && !isAutofill) {
-        LoaderWidget().showLoader(context, text: "Please wait..");
-        enableButton = true;
-        isLoadingButton = false;
-        _verifyOtpCode();
-      } else {
-        enableButton = false;
-      }
-    });
+    _otpCode.text = otpCode;
+    if (otpCode.length == otpCodeLength) {
+      LoaderWidget().showLoader(context, text: "Please wait..");
+
+      _verifyOtpCode();
+    }
   }
 
   _verifyOtpCode() {
     FocusScope.of(context).requestFocus(FocusNode());
     Timer(const Duration(milliseconds: 4000), () {
-      setState(() {
-        isLoadingButton = false;
-        enableButton = false;
-      });
-
-      context.read<RegistrationBloc>().add(LoginRequestEvent(LoginRequest(
+      context.read<LoginBloc>().add(LoginRequestEvent(LoginRequest(
           request: Request(
               data: Data(
-                  mobNo: "+91${widget.mobileNumber}",
-                  otp: _otpCode,
+                  mobNo: widget.mobileNumber,
+                  otp: _otpCode.text,
                   userType: "virtual"),
               appID: "45370504ab27eed7327a1df46403a30a"))));
     });
@@ -116,14 +120,14 @@ class _LoginPageState extends State<LoginPage> {
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: TextWidget(
-                    "OTP Verification",
+                    AppConstants.otpVerify,
                     size: 25,
                   ),
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 7),
                   child: TextWidget(
-                    "OTP will be automatically verified",
+                    AppConstants.otpVerified,
                     color: Colors.grey,
                     size: 18,
                   ),
@@ -151,8 +155,8 @@ class _LoginPageState extends State<LoginPage> {
                   child: Center(
                       child: TextButton(
                           onPressed: () {
-                            LoaderWidget()
-                                .showLoader(context, text: "Please wait..");
+                            LoaderWidget().showLoader(context,
+                                text: AppConstants.pleaseWait);
                             context.read<RegistrationBloc>().add(
                                 RegistrationRequestEvent(reg.RegistrationRequest(
                                     request: reg.Request(
@@ -162,7 +166,7 @@ class _LoginPageState extends State<LoginPage> {
                                             "f79f65f1b98e116f40633dbb46fd5e21"))));
                           },
                           child: const TextWidget(
-                            "Resend OTP",
+                            AppConstants.resendOtp,
                             size: 19,
                             color: Colors.blue,
                           ))),

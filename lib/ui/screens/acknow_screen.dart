@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:watchlist/constants/app_constants.dart';
+import 'package:watchlist/constants/route_name.dart';
 import 'package:watchlist/ui/widgets/app_scaffold.dart';
 import 'package:watchlist/ui/widgets/text_widget.dart';
 
@@ -10,7 +12,8 @@ class Acknowledge extends StatelessWidget {
     return Appscaffold(
       title: InkWell(
         onTap: () {
-          Navigator.pushReplacementNamed(context, "/watchlist");
+          Navigator.pop(context);
+          Navigator.pop(context);
         },
         child: Row(children: const [
           Icon(
@@ -18,7 +21,7 @@ class Acknowledge extends StatelessWidget {
             color: Colors.blue,
           ),
           TextWidget(
-            "Back",
+            AppConstants.back,
             color: Colors.blue,
           )
         ]),
@@ -30,10 +33,11 @@ class Acknowledge extends StatelessWidget {
               alignment: Alignment.bottomRight,
               child: TextButton(
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, "/register");
+                    Navigator.pushReplacementNamed(
+                        context, RouteName.registerScreen);
                   },
                   child: const TextWidget(
-                    "LogOut",
+                    AppConstants.logout,
                     color: Colors.blue,
                     size: 17,
                   ))),
@@ -41,7 +45,7 @@ class Acknowledge extends StatelessWidget {
               height: MediaQuery.of(context).size.height * 0.6,
               child: const Center(
                   child: TextWidget(
-                "Successful!!!",
+                AppConstants.success,
                 size: 30,
                 color: Colors.red,
                 fontweight: FontWeight.bold,
