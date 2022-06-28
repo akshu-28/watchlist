@@ -98,6 +98,7 @@ class _OtpValidationState extends State<OtpValidation> {
 
   @override
   Widget build(BuildContext context) {
+    log(widget.mobileNumber);
     return Appscaffold(
         title: InkWell(
           onTap: () {
@@ -164,7 +165,7 @@ class _OtpValidationState extends State<OtpValidation> {
                                 RegistrationRequestEvent(reg.RegistrationRequest(
                                     request: reg.Request(
                                         data: reg.Data(
-                                            mobNo: "+91${widget.mobileNumber}"),
+                                            mobNo: widget.mobileNumber),
                                         appID:
                                             "f79f65f1b98e116f40633dbb46fd5e21"))));
                           },
