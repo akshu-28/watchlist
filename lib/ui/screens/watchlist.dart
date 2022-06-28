@@ -21,8 +21,8 @@ class _WatchlistState extends State<Watchlist> {
   late WatchlistBloc watchlistBloc;
   @override
   void initState() {
-    watchlistBloc = BlocProvider.of<WatchlistBloc>(context)
-      ..stream.listen((event) {});
+    watchlistBloc = BlocProvider.of<WatchlistBloc>(context);
+
     watchlistBloc.add(FetchWatchlist());
     super.initState();
   }
