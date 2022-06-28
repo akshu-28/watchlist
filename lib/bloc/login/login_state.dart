@@ -1,20 +1,19 @@
 part of 'login_bloc.dart';
 
+abstract class OtpvalidationState {}
 
-abstract class LoginState {}
+class LoginInitial extends OtpvalidationState {}
 
-class LoginInitial extends LoginState {}
+class OtpvalidationLoad extends OtpvalidationState {}
 
-class LoginLoad extends LoginState {}
-
-class LoginDone extends LoginState {
+class OtpvalidationDone extends OtpvalidationState {
   final LoginResponse response;
 
-  LoginDone(this.response);
+  OtpvalidationDone(this.response);
 }
 
-class LoginError extends LoginState {
+class OtpvalidationError extends OtpvalidationState {
   final String error;
 
-  LoginError(this.error);
+  OtpvalidationError(this.error);
 }

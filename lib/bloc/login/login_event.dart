@@ -1,10 +1,9 @@
 part of 'login_bloc.dart';
 
+abstract class OtpvalidationEvent {}
 
-abstract class LoginEvent {}
+class OtpvalidationRequestEvent extends OtpvalidationEvent {
+  final OtpvalidationRequest otpvalidationRequest;
 
-class LoginRequestEvent extends LoginEvent {
-  final LoginRequest loginRequest;
-
-  LoginRequestEvent(this.loginRequest);
+  OtpvalidationRequestEvent(this.otpvalidationRequest);
 }

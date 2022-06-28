@@ -35,10 +35,10 @@ class RouteGenerator {
                       create: (context) => RegistrationBloc(),
                     ),
                     BlocProvider(
-                      create: (context) => LoginBloc(),
+                      create: (context) => OtpvalidationBloc(),
                     )
                   ],
-                  child: LoginPage(mobileNumber: args as String),
+                  child: OtpValidation(mobileNumber: args as String),
                 ));
       case RouteName.watchlistScreen:
         return MaterialPageRoute(

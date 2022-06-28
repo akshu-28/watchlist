@@ -1,10 +1,10 @@
-class LoginRequest {
-  LoginRequest({
+class OtpvalidationRequest {
+  OtpvalidationRequest({
     required this.request,
   });
   late final Request request;
 
-  LoginRequest.fromJson(Map<String, dynamic> json) {
+  OtpvalidationRequest.fromJson(Map<String, dynamic> json) {
     request = Request.fromJson(json['request']);
   }
 

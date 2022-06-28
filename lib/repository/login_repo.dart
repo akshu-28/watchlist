@@ -7,8 +7,8 @@ import 'package:watchlist/resources/api_base_helper.dart';
 
 import '../model/login_response.dart';
 
-class LoginRepository {
-  Future<LoginResponse> login(LoginRequest product) async {
+class OtpvalidationRepository {
+  Future<LoginResponse> login(OtpvalidationRequest product) async {
     var response = await ApiBaseHelper()
         .postMethod(ApiUrls.loginUrl, json.encode(product));
 

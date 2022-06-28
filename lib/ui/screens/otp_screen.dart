@@ -16,20 +16,20 @@ import 'package:watchlist/ui/widgets/app_scaffold.dart';
 import 'package:watchlist/ui/widgets/loader_widget.dart';
 import 'package:watchlist/ui/widgets/text_widget.dart';
 
-class LoginPage extends StatefulWidget {
+class OtpValidation extends StatefulWidget {
   final String mobileNumber;
-  const LoginPage({Key? key, required this.mobileNumber}) : super(key: key);
+  const OtpValidation({Key? key, required this.mobileNumber}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<OtpValidation> createState() => _OtpValidationState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _OtpValidationState extends State<OtpValidation> {
   int otpCodeLength = 4;
   String? _otpCode;
 
   TextEditingController textEditingController = TextEditingController(text: "");
-  late LoginBloc loginBloc;
+  late OtpvalidationBloc otpvalidationBloc;
   late RegistrationBloc registrationBloc;
   @override
   void initState() {
@@ -47,16 +47,16 @@ class _LoginPageState extends State<LoginPage> {
         }
       });
 
-    loginBloc = BlocProvider.of<LoginBloc>(context)
+    otpvalidationBloc = BlocProvider.of<OtpvalidationBloc>(context)
       ..stream.listen((state) {
         if (state is RegistrationDone) {
           Navigator.pop(context);
         }
-        if (state is LoginDone) {
+        if (state is OtpvalidationDone) {
           Navigator.pop(context);
           Navigator.pushNamed(context, RouteName.watchlistScreen);
         }
-        if (state is LoginError) {
+        if (state is OtpvalidationError) {
           log(state.error);
           Navigator.pop(context);
           Fluttertoast.showToast(msg: state.error, backgroundColor: Colors.red);
@@ -83,13 +83,14 @@ class _LoginPageState extends State<LoginPage> {
   _verifyOtpCode() {
     FocusScope.of(context).requestFocus(FocusNode());
     Timer(const Duration(milliseconds: 4000), () {
-      context.read<LoginBloc>().add(LoginRequestEvent(LoginRequest(
-          request: Request(
-              data: Data(
-                  mobNo: widget.mobileNumber,
-                  otp: _otpCode ?? "",
-                  userType: "virtual"),
-              appID: "45370504ab27eed7327a1df46403a30a"))));
+      context.read<OtpvalidationBloc>().add(OtpvalidationRequestEvent(
+          OtpvalidationRequest(
+              request: Request(
+                  data: Data(
+                      mobNo: widget.mobileNumber,
+                      otp: _otpCode ?? "",
+                      userType: "virtual"),
+                  appID: "45370504ab27eed7327a1df46403a30a"))));
     });
   }
 
