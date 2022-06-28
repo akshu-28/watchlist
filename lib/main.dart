@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -36,7 +34,6 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
-        log("themes" + state.theme.toString());
         return MaterialApp(
           title: AppConstants.watchlistTitle,
           theme: state.theme == true

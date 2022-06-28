@@ -14,7 +14,7 @@ class Appscaffold extends StatefulWidget {
 class _AppscaffoldState extends State<Appscaffold> {
   @override
   void initState() {
-    // TODO: implement initState
+   
     super.initState();
     getTheme();
   }
