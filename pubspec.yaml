@@ -39,6 +39,7 @@ dependencies:
   sms_otp_auto_verify: ^2.1.0   #used for otp field
   fluttertoast: ^8.0.9          #for displaying toast messages
   animated_text_kit: ^4.2.2     #used for animated text in splash screen
+  shared_preferences: ^2.0.15
   
 
 dev_dependencies:

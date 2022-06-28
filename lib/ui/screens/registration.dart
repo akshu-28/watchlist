@@ -210,7 +210,8 @@ class _RegistrationState extends State<Registration> {
                     alignment: Alignment.center,
                     child: TextButton(
                         style: TextButton.styleFrom(
-                          backgroundColor: Colors.blue[700],
+                            backgroundColor:Theme.of(context).backgroundColor
+                         
                         ),
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
