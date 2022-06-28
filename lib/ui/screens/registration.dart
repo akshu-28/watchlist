@@ -30,7 +30,7 @@ class _RegistrationState extends State<Registration> {
       ..stream.listen((state) {
         if (state is RegistrationDone) {
           log(state.response.response.infoMsg);
-          Navigator.pop(context);
+          LoaderWidget().showLoader(context, stopLoader: true);
           Navigator.pushNamed(context, RouteName.otpvalidationScreen,
               arguments: (ccode.text + phoneNo.text));
         }
@@ -88,6 +88,7 @@ class _RegistrationState extends State<Registration> {
                     ),
                   ),
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       SizedBox(
@@ -157,7 +158,6 @@ class _RegistrationState extends State<Registration> {
                                   color: Colors.grey, width: 0.5),
                               borderRadius: BorderRadius.circular(5.0),
                             ),
-                            isCollapsed: false,
                             enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
                                   color: Colors.grey, width: 0.5),

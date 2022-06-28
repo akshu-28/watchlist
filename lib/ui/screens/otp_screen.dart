@@ -40,28 +40,23 @@ class _OtpValidationState extends State<OtpValidation> {
     registrationBloc = BlocProvider.of<RegistrationBloc>(context)
       ..stream.listen((state) {
         if (state is RegistrationDone) {
-          Navigator.pop(context);
+          LoaderWidget().showLoader(context, stopLoader: true);
         }
 
         if (state is RegistrationError) {
-          log(state.error);
-          Navigator.pop(context);
+          LoaderWidget().showLoader(context, stopLoader: true);
           Fluttertoast.showToast(msg: state.error, backgroundColor: Colors.red);
         }
       });
 
     otpvalidationBloc = BlocProvider.of<OtpvalidationBloc>(context)
       ..stream.listen((state) {
-        if (state is RegistrationDone) {
-          Navigator.pop(context);
-        }
         if (state is OtpvalidationDone) {
-          Navigator.pop(context);
+          LoaderWidget().showLoader(context, stopLoader: true);
           Navigator.pushNamed(context, RouteName.watchlistScreen);
         }
         if (state is OtpvalidationError) {
-          log(state.error);
-          Navigator.pop(context);
+          LoaderWidget().showLoader(context, stopLoader: true);
           Fluttertoast.showToast(msg: state.error, backgroundColor: Colors.red);
         }
       });

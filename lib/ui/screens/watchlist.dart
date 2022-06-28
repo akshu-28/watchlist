@@ -5,6 +5,7 @@ import 'package:watchlist/bloc/watchlist/watchlist_bloc.dart';
 import 'package:watchlist/constants/app_constants.dart';
 import 'package:watchlist/constants/route_name.dart';
 import 'package:watchlist/model/watchlist_model.dart';
+import 'package:watchlist/route_generator.dart';
 import 'package:watchlist/ui/screens/confirm_screen.dart';
 import 'package:watchlist/ui/widgets/app_scaffold.dart';
 
@@ -76,10 +77,11 @@ class _WatchlistState extends State<Watchlist> {
                                 children: [
                                   TextButton(
                                       onPressed: () {
-                                        Navigator.pushNamed(
-                                            context, RouteName.confirmScreen,
-                                            arguments: ConfirmArgs(
-                                                watchlist.symbols[index]));
+                                        Navigator.of(context,
+                                                rootNavigator: true)
+                                            .pushNamed(RouteName.confirmScreen,
+                                                arguments: ConfirmArgs(
+                                                    watchlist.symbols[index]));
                                       },
                                       style: TextButton.styleFrom(
                                           backgroundColor: Colors.green),
@@ -89,10 +91,11 @@ class _WatchlistState extends State<Watchlist> {
                                       )),
                                   TextButton(
                                       onPressed: () {
-                                        Navigator.pushNamed(
-                                            context, RouteName.confirmScreen,
-                                            arguments: ConfirmArgs(
-                                                watchlist.symbols[index]));
+                                        Navigator.of(context,
+                                                rootNavigator: true)
+                                            .pushNamed(RouteName.confirmScreen,
+                                                arguments: ConfirmArgs(
+                                                    watchlist.symbols[index]));
                                       },
                                       style: TextButton.styleFrom(
                                           backgroundColor: Colors.red),

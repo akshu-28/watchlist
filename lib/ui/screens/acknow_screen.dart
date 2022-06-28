@@ -13,7 +13,6 @@ class Acknowledge extends StatelessWidget {
       title: InkWell(
         onTap: () {
           Navigator.pop(context);
-          Navigator.pop(context);
         },
         child: Row(children: const [
           Icon(

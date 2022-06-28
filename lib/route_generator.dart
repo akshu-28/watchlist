@@ -75,4 +75,8 @@ class NavigationService {
   static Future<dynamic> navigateTo(String routeName, Object? arg) {
     return navigatorKey.currentState!.pushNamed(routeName, arguments: arg);
   }
+
+  static Future<dynamic> navigateTopop(String routeName, Object? arg) {
+    return navigatorKey.currentState!.pushNamed(routeName, arguments: arg);
+  }
 }
