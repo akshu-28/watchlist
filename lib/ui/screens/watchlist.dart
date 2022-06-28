@@ -5,7 +5,7 @@ import 'package:watchlist/bloc/watchlist/watchlist_bloc.dart';
 import 'package:watchlist/constants/app_constants.dart';
 import 'package:watchlist/constants/route_name.dart';
 import 'package:watchlist/model/watchlist_model.dart';
-import 'package:watchlist/route_generator.dart';
+
 import 'package:watchlist/ui/screens/confirm_screen.dart';
 import 'package:watchlist/ui/widgets/app_scaffold.dart';
 
