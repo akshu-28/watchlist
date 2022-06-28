@@ -25,10 +25,10 @@ class RouteGenerator {
       case RouteName.registerScreen:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                  create: (context) => RegistrationBloc(),
+                  create: (_) => RegistrationBloc(),
                   child: const Registration(),
                 ));
-      case RouteName.loginScreen:
+      case RouteName.otpvalidationScreen:
         return MaterialPageRoute(
             builder: (_) => MultiBlocProvider(
                   providers: [

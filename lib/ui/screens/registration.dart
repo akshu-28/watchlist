@@ -21,26 +21,26 @@ class Registration extends StatefulWidget {
 
 class _RegistrationState extends State<Registration> {
   late RegistrationBloc registrationBloc;
-  final intRegex = RegExp(r'\d+', multiLine: true);
+
   @override
   void initState() {
     super.initState();
 
     registrationBloc = BlocProvider.of<RegistrationBloc>(context)
-      ..add(AgreeEvent(false))
       ..stream.listen((state) {
         if (state is RegistrationDone) {
           log(state.response.response.infoMsg);
           Navigator.pop(context);
-          Navigator.pushNamed(context, RouteName.loginScreen,
+          Navigator.pushNamed(context, RouteName.otpvalidationScreen,
               arguments: (ccode.text + phoneNo.text));
         }
         if (state is RegistrationError) {
           log(state.error);
           Navigator.pop(context);
-          Fluttertoast.showToast(msg: state.error);
+          Fluttertoast.showToast(msg: state.error, backgroundColor: Colors.red);
         }
       });
+    registrationBloc.add(AgreeEvent(false));
   }
 
   final formKey = GlobalKey<FormState>();
@@ -130,6 +130,7 @@ class _RegistrationState extends State<Registration> {
                         width: MediaQuery.of(context).size.width * 0.71,
                         child: TextFormField(
                           controller: phoneNo,
+                          // autofocus: true,
                           validator: (value) {
                             if (value!.isEmpty || value.length < 10) {
                               return AppConstants.mobileValidation;

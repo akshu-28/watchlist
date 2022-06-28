@@ -13,5 +13,3 @@ class AgreeEvent extends RegistrationEvent {
 
   AgreeEvent(this.agree);
 }
-
-
