@@ -26,7 +26,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   int otpCodeLength = 4;
-  TextEditingController _otpCode = TextEditingController();
+  String? _otpCode;
 
   TextEditingController textEditingController = TextEditingController(text: "");
   late LoginBloc loginBloc;
@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _onOtpCallBack(String otpCode, bool isAutofill) {
-    _otpCode.text = otpCode;
+    _otpCode = otpCode;
     if (otpCode.length == otpCodeLength) {
       LoaderWidget().showLoader(context, text: "Please wait..");
 
@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
           request: Request(
               data: Data(
                   mobNo: widget.mobileNumber,
-                  otp: _otpCode.text,
+                  otp: _otpCode ?? "",
                   userType: "virtual"),
               appID: "45370504ab27eed7327a1df46403a30a"))));
     });
