@@ -33,6 +33,7 @@ class _OtpValidationState extends State<OtpValidation> {
   TextEditingController textEditingController = TextEditingController(text: "");
   late OtpvalidationBloc otpvalidationBloc;
   late RegistrationBloc registrationBloc;
+  ValueNotifier valueNotifier = ValueNotifier("");
   @override
   void initState() {
     super.initState();
@@ -138,21 +139,27 @@ class _OtpValidationState extends State<OtpValidation> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: TextFieldPin(
-                      textController: textEditingController,
-                      autoFocus: true,
-                      codeLength: otpCodeLength,
-                      alignment: MainAxisAlignment.center,
-                      defaultBoxSize: 46.0,
-                      margin: 10,
-                      selectedBoxSize: 46.0,
-                      textStyle: const TextStyle(fontSize: 16),
-                      defaultDecoration: _pinPutDecoration.copyWith(
-                          border: Border.all(color: Colors.grey)),
-                      selectedDecoration: _pinPutDecoration,
-                      onChange: (code) {
-                        _onOtpCallBack(code, false);
-                      }),
+                  child: ValueListenableBuilder(
+                    valueListenable: valueNotifier,
+                    builder: (context, value, child) {
+                      return TextFieldPin(
+                          textController: textEditingController,
+                          autoFocus: true,
+                          codeLength: otpCodeLength,
+                          alignment: MainAxisAlignment.center,
+                          defaultBoxSize: 46.0,
+                          margin: 10,
+                          selectedBoxSize: 46.0,
+                          textStyle: const TextStyle(fontSize: 16),
+                          defaultDecoration: _pinPutDecoration.copyWith(
+                              border: Border.all(color: Colors.grey)),
+                          selectedDecoration: _pinPutDecoration,
+                          onChange: (code) {
+                            valueNotifier.value = code;
+                            _onOtpCallBack(code, false);
+                          });
+                    },
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 30),
