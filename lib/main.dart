@@ -40,11 +40,13 @@ class _MyAppState extends State<MyApp> {
               ? ThemeData(
                   indicatorColor: Colors.white,
                   primarySwatch: Colors.blue,
+                  cardColor: Colors.black,
                   backgroundColor: Colors.black)
               : ThemeData(
                   indicatorColor: Colors.black,
                   primarySwatch: Colors.blue,
                   backgroundColor: Colors.blue[700],
+                  cardColor: Colors.white,
                 ),
           debugShowCheckedModeBanner: false,
           initialRoute: RouteName.splashScreen,

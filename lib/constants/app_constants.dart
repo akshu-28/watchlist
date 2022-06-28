@@ -28,4 +28,5 @@ class AppConstants {
   static const String pleaseAgree = "Please agree to our terms and conditons";
   static const String watchlistTitle = "WATCHLIST";
   static const String pageNotfound = "Page Not Found";
+    static const String isDark = "isDark";
 }

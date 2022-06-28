@@ -31,15 +31,17 @@ class _WatchlistState extends State<Watchlist> {
   @override
   Widget build(BuildContext context) {
     return Appscaffold(
+      color: Theme.of(context).cardColor,
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Padding(
+          Padding(
             padding: EdgeInsets.symmetric(vertical: 30),
             child: TextWidget(
               AppConstants.watchlist,
               size: 20,
               fontweight: FontWeight.bold,
+              color: Theme.of(context).indicatorColor,
             ),
           ),
           BlocBuilder<WatchlistBloc, WatchlistState>(
@@ -47,71 +49,81 @@ class _WatchlistState extends State<Watchlist> {
               if (state is WatchlistDone) {
                 Data watchlist = state.watchlist.response.data;
                 return Expanded(
-                  child: ListView.separated(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    itemCount: watchlist.symbols.length,
-                    shrinkWrap: true,
-                    separatorBuilder: (context, index) {
-                      return const Divider();
-                    },
-                    itemBuilder: (context, index) {
-                      return ExpandableNotifier(
-                          child: Builder(builder: (context) {
-                        return Column(children: [
-                          ScrollOnExpand(
-                              child: ExpandablePanel(
-                            theme: const ExpandableThemeData(
-                              hasIcon: false,
-                              useInkWell: true,
-                            ),
-                            collapsed: Container(
-                              height: 1,
-                            ),
-                            header: bodyData(context, watchlist, index),
-                            expanded: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 15),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context,
-                                                rootNavigator: true)
-                                            .pushNamed(RouteName.confirmScreen,
-                                                arguments: ConfirmArgs(
-                                                    watchlist.symbols[index]));
-                                      },
-                                      style: TextButton.styleFrom(
-                                          backgroundColor: Colors.green),
-                                      child: const TextWidget(
-                                        AppConstants.buy,
-                                        color: Colors.white,
-                                      )),
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context,
-                                                rootNavigator: true)
-                                            .pushNamed(RouteName.confirmScreen,
-                                                arguments: ConfirmArgs(
-                                                    watchlist.symbols[index]));
-                                      },
-                                      style: TextButton.styleFrom(
-                                          backgroundColor: Colors.red),
-                                      child: const TextWidget(
-                                        AppConstants.sell,
-                                        color: Colors.white,
-                                      ))
-                                ],
+                  child: Container(
+                    color: Theme.of(context).cardColor,
+                    child: ListView.separated(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      itemCount: watchlist.symbols.length,
+                      shrinkWrap: true,
+                      separatorBuilder: (context, index) {
+                        return Divider(
+                          color: Theme.of(context).indicatorColor,
+                        );
+                      },
+                      itemBuilder: (context, index) {
+                        return ExpandableNotifier(
+                            child: Builder(builder: (context) {
+                          return Column(children: [
+                            ScrollOnExpand(
+                                child: ExpandablePanel(
+                              theme: const ExpandableThemeData(
+                                hasIcon: false,
+                                useInkWell: true,
                               ),
-                            ),
-                          ))
-                        ]);
-                      }));
+                              collapsed: Container(
+                                height: 1,
+                              ),
+                              header: bodyData(context, watchlist, index),
+                              expanded: Container(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 15),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context,
+                                                  rootNavigator: true)
+                                              .pushNamed(
+                                                  RouteName.confirmScreen,
+                                                  arguments: ConfirmArgs(
+                                                      watchlist
+                                                          .symbols[index]));
+                                        },
+                                        style: TextButton.styleFrom(
+                                            backgroundColor: Colors.green),
+                                        child: const TextWidget(
+                                          AppConstants.buy,
+                                          color: Colors.white,
+                                        )),
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context,
+                                                  rootNavigator: true)
+                                              .pushNamed(
+                                                  RouteName.confirmScreen,
+                                                  arguments: ConfirmArgs(
+                                                      watchlist
+                                                          .symbols[index]));
+                                        },
+                                        style: TextButton.styleFrom(
+                                            backgroundColor: Colors.red),
+                                        child: const TextWidget(
+                                          AppConstants.sell,
+                                          color: Colors.white,
+                                        ))
+                                  ],
+                                ),
+                              ),
+                            ))
+                          ]);
+                        }));
 
-                      //bodyData(context, watchlist, index);
-                    },
+                        //bodyData(context, watchlist, index);
+                      },
+                    ),
                   ),
                 );
               }
@@ -141,6 +153,7 @@ class _WatchlistState extends State<Watchlist> {
                     watchlist.symbols[index].dispSym.toString(),
                     fontweight: FontWeight.w500,
                     size: 16,
+                    color: Theme.of(context).indicatorColor,
                   ),
                   const Divider(
                     height: 5,
@@ -149,6 +162,7 @@ class _WatchlistState extends State<Watchlist> {
                   TextWidget(
                     watchlist.symbols[index].companyName.toString(),
                     size: 13,
+                    color: Theme.of(context).indicatorColor,
                   ),
                 ],
               ),

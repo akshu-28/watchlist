@@ -3,10 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watchlist/bloc/theme/theme_bloc.dart';
 
 class Appscaffold extends StatefulWidget {
-  const Appscaffold({Key? key, required this.body, this.title})
+  const Appscaffold({Key? key, required this.body, this.title, this.color})
       : super(key: key);
   final Widget body;
   final Widget? title;
+  final Color? color;
   @override
   State<Appscaffold> createState() => _AppscaffoldState();
 }
@@ -14,7 +15,6 @@ class Appscaffold extends StatefulWidget {
 class _AppscaffoldState extends State<Appscaffold> {
   @override
   void initState() {
-   
     super.initState();
     getTheme();
   }
@@ -32,6 +32,7 @@ class _AppscaffoldState extends State<Appscaffold> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: widget.color ?? Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.grey.withOpacity(0.5),
