@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
-import 'package:watchlist/bloc/login/login_bloc.dart';
+
 import 'package:watchlist/bloc/registration/registration_bloc.dart';
 import 'package:watchlist/constants/app_constants.dart';
 import 'package:watchlist/constants/route_name.dart';
@@ -15,6 +15,8 @@ import 'package:watchlist/model/registration_request.dart' as reg;
 import 'package:watchlist/ui/widgets/app_scaffold.dart';
 import 'package:watchlist/ui/widgets/loader_widget.dart';
 import 'package:watchlist/ui/widgets/text_widget.dart';
+
+import '../../bloc/otp_validation/otp_validation_bloc.dart';
 
 class OtpValidation extends StatefulWidget {
   final String mobileNumber;

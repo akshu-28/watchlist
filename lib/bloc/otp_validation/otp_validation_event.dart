@@ -1,4 +1,4 @@
-part of 'login_bloc.dart';
+part of 'otp_validation_bloc.dart';
 
 abstract class OtpvalidationEvent {}
 

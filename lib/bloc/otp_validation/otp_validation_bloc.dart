@@ -4,8 +4,8 @@ import '../../model/login_request.dart';
 import '../../model/login_response.dart';
 import '../../repository/login_repo.dart';
 
-part 'login_event.dart';
-part 'login_state.dart';
+part 'otp_validation_event.dart';
+part 'otp_validation_state.dart';
 
 class OtpvalidationBloc extends Bloc<OtpvalidationEvent, OtpvalidationState> {
   OtpvalidationBloc() : super(LoginInitial()) {
